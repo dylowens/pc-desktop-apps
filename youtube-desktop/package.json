@@ -1,0 +1,17 @@
+{
+  "name": "youtube-desktop",
+  "version": "1.0.0",
+  "description": "YouTube desktop wrapper",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-packager . YouTubeDesktop --platform=win32 --arch=x64 --out=dist --overwrite --icon=./youtube.ico"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^38.3.0",
+    "electron-packager": "^17.1.2"
+  }
+}

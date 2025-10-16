@@ -1,0 +1,71 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+out/
+
+# Logs and diagnostics
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+tmp/
+temp/
+*.tmp
+*.swp
+*.cache
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.code-workspace
+
+# Windows binaries & tools
+*.exe
+*.dll
+*.pdb
+*.obj
+*.lib
+*.exp
+*.ilk
+*.appx
+*.appxbundle
+*.msi
+*.msix
+*.msixbundle
+*.cab
+*.lnk
+Desktop.ini
+ehthumbs.db
+
+# Electron / browser app data
+**/userdata/
+**/Cache/
+**/Code Cache/
+**/GPUCache/
+**/IndexedDB/
+**/Local Storage/
+**/Session Storage/
+**/Service Worker/
+**/shared_proto_db/
+**/VideoDecodeStats/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
