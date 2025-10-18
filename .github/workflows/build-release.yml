@@ -1,0 +1,60 @@
+name: Build Windows Apps
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Build ChatGPT Desktop
+        working-directory: chatgpt-desktop
+        run: |
+          Remove-Item -Recurse -Force dist, userdata -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Name userdata | Out-Null
+          npm ci
+          npm run dist
+
+      - name: Build Grok Desktop
+        working-directory: grok-desktop
+        run: |
+          Remove-Item -Recurse -Force dist, userdata -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Name userdata | Out-Null
+          npm ci
+          npx electron-packager . GrokDesktop --platform=win32 --arch=x64 --out=dist --overwrite
+
+      - name: Build YouTube Desktop
+        working-directory: youtube-desktop
+        run: |
+          Remove-Item -Recurse -Force dist, userdata -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Name userdata | Out-Null
+          npm ci
+          npm run dist
+
+      - name: Bundle release archives
+        run: |
+          Remove-Item -Force ChatGPTDesktop-win32-x64.zip, GrokDesktop-win32-x64.zip, YouTubeDesktop-win32-x64.zip -ErrorAction SilentlyContinue
+          Compress-Archive -Path chatgpt-desktop\dist\ChatGPTDesktop-win32-x64 -DestinationPath ChatGPTDesktop-win32-x64.zip
+          Compress-Archive -Path grok-desktop\dist\GrokDesktop-win32-x64 -DestinationPath GrokDesktop-win32-x64.zip
+          Compress-Archive -Path youtube-desktop\dist\YouTubeDesktop-win32-x64 -DestinationPath YouTubeDesktop-win32-x64.zip
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-packages
+          path: |
+            ChatGPTDesktop-win32-x64.zip
+            GrokDesktop-win32-x64.zip
+            YouTubeDesktop-win32-x64.zip
